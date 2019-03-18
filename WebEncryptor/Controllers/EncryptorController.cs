@@ -8,9 +8,14 @@ namespace WebEncryptor.Controllers
 {
     public class EncryptorController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Encryptor()
         {
             return View();
+        }
+
+        private void Encrypt()
+        {
+
         }
     }
 }

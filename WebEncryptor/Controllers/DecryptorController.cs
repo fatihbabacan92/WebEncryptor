@@ -8,9 +8,10 @@ namespace WebEncryptor.Controllers
 {
     public class DecryptorController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Decryptor()
         {
             return View();
         }
+
     }
 }

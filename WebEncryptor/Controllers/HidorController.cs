@@ -8,7 +8,7 @@ namespace WebEncryptor.Controllers
 {
     public class HidorController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Hidor()
         {
             return View();
         }
