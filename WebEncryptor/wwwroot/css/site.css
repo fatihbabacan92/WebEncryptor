@@ -57,3 +57,13 @@ body {
     font-size: 4vh;
 }
 
+.downloadButton {
+    font-size: 4vh;
+    padding: 35px;
+    border: solid red 1px;
+    border-radius: 15px;
+    background: red;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
