@@ -43,6 +43,7 @@ body {
     background: red;
     margin-top: 15px;
     margin-bottom: 5px;
+    margin-right: 15px;
 }
 
 .filePicker {
@@ -67,3 +68,7 @@ body {
     margin-bottom: 5px;
 }
 
+.hidorText {
+    width: 50vw;
+    height: 25vh;
+}
