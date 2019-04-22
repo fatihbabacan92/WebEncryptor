@@ -6,19 +6,29 @@
 <h2>Hide text in images</h2>
 
 <div>
-    <form>
-        <a>
-            <div class="filePicker">
-                <p>Choose or Drag Image</p>
+    <form method="post" enctype="multipart/form-data" asp-controller="HidorController" asp-action="Upload">
+        <div class="form-group">
+            <div class="col-md-10">
+                <h3>Upload an Image file</h3>
+                <input type="file" name="files" multiple class="customButton" 
+                       accept=".png,.jpg,.jpeg,.gif">
             </div>
-        </a>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="submit" value="Upload" class="customButton">
+            </div>
+        </div>
+    </form>
+    <form method="post">
         <br />
         <h3>Text</h3>
         <textarea class="hidorText"></textarea>
         <br />
-        <button class="customButton">Hide</button>
-        <button class="customButton">Extract</button>
+        <input type="submit" value="Hide Text" class="customButton" asp-controller="Hidor" asp-action="HideText">
+        <input type="submit" value="Extract Text"class="customButton" asp-controller="Hidor" asp-action="ExtractText">
     </form>
+  
 </div>
 
 <div>
