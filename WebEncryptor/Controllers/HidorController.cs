@@ -12,28 +12,33 @@ namespace WebEncryptor.Controllers
     public class HidorController : Controller
     {
 
-        Bitmap btm;
+        Bitmap btm = null;
 
         public IActionResult Hidor()
         {
             return View();
         }
 
-        public async void Upload(ImageFile image)
+
+        // Implement https://github.com/paw3lx/StegoCore
+        [HttpPost("UploadImage")]
+        public async Task<IActionResult> Upload(ImageFile image)
         {
+            var fileName = Path.GetFileName(image.FileName);
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\uploads", fileName);
             if (ModelState.IsValid)
             {
                 if (image != null && image.Length > 0)
                 {
-                    var fileName = Path.GetFileName(image.FileName);
-                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\uploads", fileName);
+                    
                     using (var fileSteam = new FileStream(filePath, FileMode.Create))
                     {
                         await image.CopyToAsync(fileSteam);
                     }
-                    btm = new Bitmap(filePath);
+                   // btm = new Bitmap(filePath);
                 }
             }
+            return Ok(new { filePath, fileName });
         }
 
         public Bitmap HideText(String text)
