@@ -22,23 +22,30 @@ namespace WebEncryptor.Controllers
 
         // Implement https://github.com/paw3lx/StegoCore
         [HttpPost("UploadImage")]
-        public async Task<IActionResult> Upload(ImageFile image)
+        public async Task<IActionResult> Upload(List<ImageFile> files)
         {
-            var fileName = Path.GetFileName(image.FileName);
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\uploads", fileName);
-            if (ModelState.IsValid)
+            long size = files.Sum(f => f.Length);
+
+            // full path to file in temp location
+            var filePath = Path.GetTempFileName();
+
+            foreach (var formFile in files)
             {
-                if (image != null && image.Length > 0)
+                if (formFile.Length > 0)
                 {
-                    
-                    using (var fileSteam = new FileStream(filePath, FileMode.Create))
+                    using (var stream = new FileStream(filePath, FileMode.Create))
                     {
-                        await image.CopyToAsync(fileSteam);
+                        await formFile.CopyToAsync(stream);
                     }
-                   // btm = new Bitmap(filePath);
                 }
             }
-            return Ok(new { filePath, fileName });
+
+            // process uploaded files
+            // Don't rely on or trust the FileName property without validation.
+
+           // btm = ConvertToBitmap(filePath.ToString());  //Use Stegocore??
+
+            return RedirectToAction("Hidor"); //How to remain on same page? Return CONTENT == Upload COmplete???
         }
 
         public Bitmap HideText(String text)
@@ -50,6 +57,19 @@ namespace WebEncryptor.Controllers
         public String ExtractText()
         {
             return WebEncryptor.Helpers.Hidor.extractText(btm);
+        }
+
+        public Bitmap ConvertToBitmap(string fileName)
+        {
+            Bitmap bitmap;
+            using (Stream bmpStream = System.IO.File.Open(fileName, System.IO.FileMode.Open))
+            {
+                Image image = Image.FromStream(bmpStream);
+
+                bitmap = new Bitmap(image);
+
+            }
+            return bitmap;
         }
     }
 }
